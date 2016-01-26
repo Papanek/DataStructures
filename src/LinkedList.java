@@ -128,14 +128,16 @@ public class LinkedList<Type> {
         }
         Node current = head;
         Node previous = null;
-        //loop to specified index
+        // loop to specified index
         while (index-- > 0) {
             previous = current;
             current = current.next;
         }
         // insert data at index
-        previous.next = new Node(data, current);
-        length++;
+        if(previous!=null) {
+            previous.next = new Node(data, current);
+            length++;
+        }
     }
 
     /**
@@ -168,11 +170,11 @@ public class LinkedList<Type> {
         while (current.next != null) {
             previous = current;
             current = current.next;
-            //if data is found, cut it out
+            // if data is found, cut it out
             if (current.data == data) {
                 previous.next = current.next;
                 length--;
-                //end
+                // end
                 return;
             }
         }
@@ -191,12 +193,12 @@ public class LinkedList<Type> {
         if (head != null) {
             Node current = head;
             Node previous;
-            //loop until element is found
+            // loop until element is found
             while (current.next != null) {
                 previous = current;
                 current = current.next;
                 if (current.data == data) {
-                    //loop to remove all consecutive elements
+                    // loop to remove all consecutive elements
                     while (current.next != null && current.next.data == data) {
                         current = current.next;
                         length--;
@@ -233,8 +235,10 @@ public class LinkedList<Type> {
             current = current.next;
         }
         // remove element
-        previous.next = current.next;
-        length--;
+        if(previous!=null) {
+            previous.next = current.next;
+            length--;
+        }
     }
 
     /**
@@ -261,20 +265,36 @@ public class LinkedList<Type> {
         return -1;
     }
 
+    /**
+     * Reverses the linked list
+     */
     public void reverseList() {
+        //calls the private reverseList for recursion
         reverseList(head);
     }
 
+    /**
+     * Reverses the linked list recursively
+     *
+     * @param node Head node of a linked list
+     */
     private void reverseList(Node node) {
+        // return empty list
         if (node == null) {
             return;
         }
+        // base case, end of linked list reached
         if (node.next == null) {
+            // set head equal to last node
             head = node;
             return;
         }
+        // recursive call to reach the end of the list
         reverseList(node.next);
+
+        // set the next nodes next to the current node
         node.next.next = node;
+        // set current nodes next to null
         node.next = null;
     }
 }
