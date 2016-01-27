@@ -8,7 +8,9 @@ package lists;
  * ******************************
  **/
 abstract class AbstractList<Type> {
-    class Node {
+
+    // common class node for all lists
+    protected class Node {
         Type data;
         Node next;
 
@@ -22,4 +24,6 @@ abstract class AbstractList<Type> {
             this.next = next;
         }
     }
+
+    public abstract boolean isEmpty();
 }

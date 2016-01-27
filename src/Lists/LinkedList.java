@@ -19,6 +19,16 @@ public class LinkedList<Type> extends AbstractList<Type> {
     }
 
     /**
+     * Check if the linked list is empty
+     *
+     * @return boolean isEmpty
+     */
+    @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    /**
      * Print the contents of the linked list
      */
     public void print() {
@@ -104,9 +114,7 @@ public class LinkedList<Type> extends AbstractList<Type> {
      */
     public void insert(Type data, int index) {
         // check if valid index
-        if (index < 0 || index > length - 1) {
-            throw new IndexOutOfBoundsException("Index must be in 0..length-1");
-        }
+        validate(index);
         // add data to the front
         if (index == 0) {
             prepend(data);
@@ -127,7 +135,65 @@ public class LinkedList<Type> extends AbstractList<Type> {
     }
 
     /**
+     * Returns the first elements data from the linked list
+     *
+     * @return First data element
+     */
+    public Type getFirst() {
+        if (head == null) {
+            return null;
+        } else {
+            return head.data;
+        }
+    }
+
+    /**
+     * Gets the last element's data from the linked list
+     *
+     * @return Data from the last element
+     */
+    public Type getLast() {
+        if (head == null) {
+            return null;
+        } else {
+            Node current = head;
+            //loop to the end
+            while (current.next != null) {
+                current = current.next;
+            }
+            return current.data;
+        }
+    }
+
+    /**
+     * Returns the data element at the given index
+     *
+     * @param index index of the data to be retrieved
+     * @return data
+     */
+    public Type get(int index) {
+        //check for valid index
+        validate(index);
+
+        if (index == 0) {
+            return getFirst();
+        }
+        if (index == length - 1) {
+            return getLast();
+        }
+        Node current = head;
+        //loop towards index
+        while (index-- > 0) {
+            current = current.next;
+        }
+        //return data
+        return current.data;
+    }
+
+    /**
      * Removes the first element of the linked list
+     *
+     * @return Data of the removed element
      */
     public Type removeFirst() {
         if (head == null) {
@@ -202,20 +268,19 @@ public class LinkedList<Type> extends AbstractList<Type> {
      * Removes data element at specified index
      *
      * @param index Index of an element to be removed
+     * @return Data of the removed element
      */
     public Type remove(int index) {
         if (head == null) {
             return null;
         }
         // validate index
-        if (index < 0 || index > length - 1) {
-            throw new IndexOutOfBoundsException("Index must be in 0..length-1");
-        }
+        validate(index);
         if (index == 0) {
             return removeFirst();
         }
         Node current = head;
-        Node previous = null;
+        Node previous = current;
         // loop towards index
         while (index-- > 0) {
             previous = current;
@@ -282,5 +347,16 @@ public class LinkedList<Type> extends AbstractList<Type> {
         node.next.next = node;
         // set current nodes next to null
         node.next = null;
+    }
+
+    /**
+     * Checks if the supplied index is within the linked list bounds
+     *
+     * @param index index to be checked
+     */
+    private void validate(int index) {
+        if (index < 0 || index > length - 1) {
+            throw new IndexOutOfBoundsException("Index must be in 0..length-1");
+        }
     }
 }
