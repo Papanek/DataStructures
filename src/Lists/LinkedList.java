@@ -1,3 +1,5 @@
+package lists;
+
 /**
  * ******************************
  * Project: Data Structures
@@ -5,23 +7,7 @@
  * Date :   1/21/2016
  * ******************************
  **/
-public class LinkedList<Type> {
-    // private inner class node
-    private class Node {
-        private Type data;
-        private Node next;
-
-        Node(Type data) {
-            this.data = data;
-            this.next = null;
-        }
-
-        Node(Type data, Node next) {
-            this.data = data;
-            this.next = next;
-        }
-    }
-
+public class LinkedList<Type> extends AbstractList<Type> {
     // declare head, and length
     private Node head;
     private int length;
@@ -134,7 +120,7 @@ public class LinkedList<Type> {
             current = current.next;
         }
         // insert data at index
-        if(previous!=null) {
+        if (previous != null) {
             previous.next = new Node(data, current);
             length++;
         }
@@ -143,12 +129,14 @@ public class LinkedList<Type> {
     /**
      * Removes the first element of the linked list
      */
-    public void removeFirst() {
+    public Type removeFirst() {
         if (head == null) {
-            return;
+            return null;
         }
+        Type data = head.data;
         head = head.next;
         length--;
+        return data;
     }
 
     /**
@@ -215,17 +203,16 @@ public class LinkedList<Type> {
      *
      * @param index Index of an element to be removed
      */
-    public void remove(int index) {
+    public Type remove(int index) {
         if (head == null) {
-            return;
+            return null;
         }
         // validate index
         if (index < 0 || index > length - 1) {
             throw new IndexOutOfBoundsException("Index must be in 0..length-1");
         }
         if (index == 0) {
-            removeFirst();
-            return;
+            return removeFirst();
         }
         Node current = head;
         Node previous = null;
@@ -235,10 +222,9 @@ public class LinkedList<Type> {
             current = current.next;
         }
         // remove element
-        if(previous!=null) {
-            previous.next = current.next;
-            length--;
-        }
+        previous.next = current.next;
+        length--;
+        return current.data;
     }
 
     /**

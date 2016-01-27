@@ -1,16 +1,13 @@
-/**
- * Created by Daniel on 1/21/2016.
- */
-public class Stack<Type> {
-    private class Node {
-        private Type data;
-        private Node next;
+package lists;
 
-        Node(Type data, Node next) {
-            this.data = data;
-            this.next = next;
-        }
-    }
+/**
+ * ******************************
+ * Project: Data Structures
+ * Creator: Daniel Papanek
+ * Date :   1/21/2016
+ * ******************************
+ **/
+public class Stack<Type> extends AbstractList<Type> {
 
     private Node head;
     private int length;
